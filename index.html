@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090909">
+<meta name="description" content="Aryan Mithil Jadhav — visual designer, illustrator and Applied Arts student.">
+<title>ARYAN® — Visual Experiments</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap');
+:root{--bg:#090909;--panel:#111;--paper:#efeee9;--muted:#92918e;--line:#292929;--red:#a70f1c;--orange:#f04a2d;--white:#f5f3ed;--mono:'DM Mono',monospace;--display:'Barlow Condensed',Impact,sans-serif;--body:'Manrope',Arial,sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:85px}body{margin:0;background:var(--bg);color:var(--white);font-family:var(--body);overflow-x:hidden;cursor:none}a,button,input{font:inherit}a{color:inherit;text-decoration:none}button{cursor:none}
+#grain{position:fixed;inset:0;pointer-events:none;z-index:20;opacity:.075;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E")}
+#particles{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5}
+.cursor{position:fixed;left:0;top:0;width:12px;height:12px;border-radius:50%;background:var(--orange);z-index:100;pointer-events:none;mix-blend-mode: difference;transform:translate(-50%,-50%);transition:width .2s,height .2s}
+.cursor-ring{position:fixed;left:0;top:0;width:38px;height:38px;border:1px solid #f04a2d88;border-radius:50%;z-index:99;pointer-events:none;transform:translate(-50%,-50%);transition:width .25s,height .25s}
+body.hovering .cursor{width:26px;height:26px}body.hovering .cursor-ring{width:62px;height:62px}
+.wrap{width:min(1240px,calc(100% - 64px));margin:auto;position:relative;z-index:1}
+.topbar{height:76px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);position:sticky;top:0;background:#090909e8;backdrop-filter:blur(16px);z-index:50;padding:0 max(32px,calc((100vw - 1240px)/2))}
+.brand{font:800 25px var(--display);letter-spacing:-1px}.brand span{color:var(--orange)}
+.nav{display:flex;gap:32px;align-items:center;font:11px var(--mono);text-transform:uppercase;letter-spacing:.08em;color:#c4c2bd}.nav a{transition:color .2s}.nav a:hover{color:var(--orange)}
+.nav-cta{border:1px solid #555;padding:11px 15px;color:var(--white)!important}.nav-cta:hover{background:var(--orange);border-color:var(--orange)}
+.menu-btn{display:none;background:none;border:1px solid #555;color:white;padding:9px 12px;font:11px var(--mono)}
+.hero{min-height:690px;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:30px;padding:78px 0 88px;position:relative}
+.kicker,.eyebrow{font:11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--orange)}
+.kicker:before{content:"";display:inline-block;width:28px;height:1px;background:var(--orange);vertical-align:middle;margin-right:12px}
+.hero h1{font:900 clamp(76px,12vw,164px)/.78 var(--display);letter-spacing:-.065em;text-transform:uppercase;margin:32px 0 28px;max-width:760px}
+.hero h1 .outline{color:transparent;-webkit-text-stroke:1px #eee}.hero h1 .accent{color:var(--orange)}
+.hero-copy{max-width:470px;color:#b5b2ac;font-size:14px;line-height:1.8}
+.hero-actions{display:flex;align-items:center;gap:22px;margin-top:32px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:18px;padding:15px 19px;background:var(--orange);color:#100d0c;font:700 11px var(--mono);text-transform:uppercase;letter-spacing:.08em;border:1px solid var(--orange);transition:.25s}
+.btn:hover{background:transparent;color:var(--orange);transform:translateY(-3px)}
+.text-link{font:11px var(--mono);text-transform:uppercase;color:#ddd;border-bottom:1px solid #666;padding-bottom:6px}
+.hero-art{height:500px;position:relative;display:flex;align-items:center;justify-content:center}
+.art-frame{position:absolute;inset:7% 5% 5% 8%;border:1px solid #3d2929;transform:rotate(3deg);background:radial-gradient(ellipse at 55% 40%,#77121b 0,#2a0c10 36%,#111 72%);overflow:hidden}
+.art-frame:before{content:"";position:absolute;inset:0;background:linear-gradient(130deg,transparent 20%,#ff3b2522 50%,transparent 70%),repeating-linear-gradient(120deg,transparent 0 28px,#ffffff08 29px 30px)}
+.orbit{position:absolute;width:350px;height:350px;border:1px solid #f04a2d66;border-radius:50%;left:50%;top:48%;transform:translate(-50%,-50%);box-shadow:0 0 70px #f04a2d20,inset 0 0 70px #f04a2d18}
+.hero-symbol{position:absolute;font:900 290px/.8 var(--display);color:#f04a2d;opacity:.18;left:50%;top:48%;transform:translate(-50%,-50%) rotate(-12deg)}
+.samurai{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:clamp(170px,24vw,300px);filter:drop-shadow(0 18px 35px #000);text-shadow:12px 7px 0 #4e0b11;transform:rotate(-7deg)}
+.art-stamp{position:absolute;right:18px;bottom:20px;background:var(--paper);color:#111;padding:13px 16px;font:10px var(--mono);transform:rotate(-5deg)}
+.art-index{position:absolute;left:0;top:10%;font:10px var(--mono);writing-mode:vertical-rl;color:#b7b2ac;letter-spacing:.18em}
+.hero-bottom{position:absolute;bottom:25px;left:0;right:0;display:flex;justify-content:space-between;color:#777;font:10px var(--mono);text-transform:uppercase}
+.marquee{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:17px 0;background:#0e0e0e}
+.marquee-track{display:flex;white-space:nowrap;animation:marquee 28s linear infinite;font:700 25px var(--display);letter-spacing:.04em;color:#d9d6cf}
+.marquee span{color:var(--orange);padding:0 22px}@keyframes marquee{to{transform:translateX(-50%)}}
+section{padding:112px 0}.section-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:42px}
+.section-no{font:11px var(--mono);color:var(--orange);letter-spacing:.12em}
+h2{font:800 clamp(48px,7vw,92px)/.9 var(--display);letter-spacing:-.04em;text-transform:uppercase;margin:14px 0 0}
+.section-note{max-width:280px;color:var(--muted);font-size:12px;line-height:1.7}
+.filters{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:24px}
+.filter{background:transparent;color:#aaa;border:1px solid #393939;padding:10px 14px;font:10px var(--mono);text-transform:uppercase}
+.filter.active,.filter:hover{background:var(--orange);border-color:var(--orange);color:#111}
+.project-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+.project{grid-column:span 4;min-width:0;position:relative}
+.project:nth-child(1),.project:nth-child(4){grid-column:span 7}.project:nth-child(2),.project:nth-child(5){grid-column:span 5}.project:nth-child(3),.project:nth-child(6){grid-column:span 6}
+.project[hidden]{display:none}
+.project-visual{height:350px;position:relative;overflow:hidden;background:#191919;border:1px solid #333;isolation:isolate}
+.project:nth-child(1) .project-visual{background:radial-gradient(circle at 60% 40%,#a80d1d,#26080d 65%,#090909)}
+.project:nth-child(2) .project-visual{background:linear-gradient(145deg,#f04a2d,#a52118 58%,#190b0b)}
+.project:nth-child(3) .project-visual{background:linear-gradient(130deg,#e5e0d6,#aaa49b 60%,#272727)}
+.project:nth-child(4) .project-visual{background:radial-gradient(circle at 45% 45%,#293b3a,#101818 65%,#080808)}
+.project:nth-child(5) .project-visual{background:linear-gradient(145deg,#d8d3c9,#8c887f 50%,#1a1a1a)}
+.project:nth-child(6) .project-visual{background:radial-gradient(circle at 60% 35%,#7b1018,#1a080a 65%,#080808)}
+.visual-word{position:absolute;left:7%;top:10%;font:900 clamp(42px,6vw,90px)/.78 var(--display);text-transform:uppercase;letter-spacing:-.06em;color:#f5f1e9;max-width:90%;z-index:2}
+.visual-word.dark{color:#111}.visual-word.red{color:#f04a2d}
+.visual-sub{position:absolute;left:8%;bottom:9%;font:10px var(--mono);letter-spacing:.13em;text-transform:uppercase;color:#fff;z-index:3}
+.visual-figure{position:absolute;right:7%;bottom:-8%;font-size:clamp(120px,18vw,210px);filter:drop-shadow(0 15px 14px #0008);z-index:1;transform:rotate(-8deg)}
+.visual-circle{position:absolute;width:60%;aspect-ratio:1;border:1px solid #ffffff66;border-radius:50%;right:-10%;top:16%;box-shadow:0 0 50px #fff2,inset 0 0 50px #fff1}
+.project-meta{display:flex;justify-content:space-between;align-items:start;padding:15px 1px 0;gap:15px}
+.project-title{font:700 20px var(--display);text-transform:uppercase;letter-spacing:.02em}
+.project-type{font:10px var(--mono);color:#888;text-transform:uppercase;margin-top:5px}
+.project-arrow{width:34px;height:34px;border:1px solid #555;border-radius:50%;display:grid;place-items:center;color:var(--orange);transition:.2s}
+.project:hover .project-arrow{background:var(--orange);color:#111;transform:rotate(45deg)}
+.project:hover .visual-figure{transform:rotate(0) scale(1.08);transition:transform .5s}
+.about{background:var(--paper);color:#111;position:relative;overflow:hidden}
+.about:after{content:"AMJ";position:absolute;right:-20px;bottom:-120px;font:900 360px/.8 var(--display);color:#111;opacity:.035;pointer-events:none}
+.about .section-no{color:#a70f1c}.about .section-note{color:#666}
+.about-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:9%;align-items:start}
+.about-big{font:900 clamp(54px,8vw,110px)/.82 var(--display);text-transform:uppercase;letter-spacing:-.06em}
+.about-big span{color:var(--orange)}
+.about-text{font-size:15px;line-height:1.9;color:#45423d;max-width:620px}
+.about-text strong{color:#111}
+.skill-list{display:flex;gap:8px;flex-wrap:wrap;margin-top:25px}
+.skill{border:1px solid #bbb5ab;padding:9px 12px;font:10px var(--mono);text-transform:uppercase}
+.info-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#c9c4bb;margin-top:58px;border:1px solid #c9c4bb}
+.info-cell{background:var(--paper);padding:22px}.info-cell small{font:10px var(--mono);color:#777;text-transform:uppercase}.info-cell p{font:700 18px var(--display);text-transform:uppercase;margin:9px 0 0}
+.process-grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.process{padding:25px 20px 28px 0;border-right:1px solid var(--line);margin-right:20px}.process:last-child{border:0;margin:0}
+.process b{font:11px var(--mono);color:var(--orange)}.process h3{font:700 25px var(--display);text-transform:uppercase;margin:24px 0 10px}.process p{font-size:12px;line-height:1.7;color:#999;max-width:220px}
+.contact{background:#a70f1c;position:relative;overflow:hidden}
+.contact:after{content:"HELLO";position:absolute;right:-20px;bottom:-100px;font:900 300px/.8 var(--display);color:#fff;opacity:.07}
+.contact .section-no,.contact .section-note{color:#f4c6c3}
+.contact h2{font-size:clamp(65px,11vw,140px);max-width:850px}
+.contact-row{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-top:45px;position:relative;z-index:1}
+.contact-mail{font:700 clamp(20px,3vw,36px) var(--display);border-bottom:2px solid #fff;padding-bottom:8px;overflow-wrap:anywhere}
+.contact-hint{font:10px var(--mono);text-transform:uppercase;color:#f3c9c5;max-width:220px;line-height:1.7}
+footer{padding:25px 0;color:#777;font:10px var(--mono);text-transform:uppercase}
+.footer-row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.music{position:fixed;bottom:22px;right:22px;z-index:60;display:flex;align-items:center;gap:10px;background:#171717;border:1px solid #454545;padding:10px 12px;box-shadow:0 10px 35px #0008}
+.music button{background:var(--orange);color:#111;border:0;width:30px;height:30px;border-radius:50%;font-weight:900}
+.music label{font:9px var(--mono);color:#ddd;text-transform:uppercase;cursor:pointer}.music input{display:none}
+.music-status{font:8px var(--mono);color:#888;max-width:85px}
+.modal{position:fixed;inset:0;background:#000d;z-index:90;display:none;align-items:center;justify-content:center;padding:22px}.modal.open{display:flex}
+.modal-card{width:min(620px,100%);background:#111;border:1px solid #555;padding:30px;position:relative}
+.modal-close{position:absolute;right:18px;top:18px;background:none;border:1px solid #555;color:#fff;padding:7px 10px}
+.modal-card h3{font:800 48px var(--display);text-transform:uppercase;margin:20px 0 10px}.modal-card p{color:#aaa;line-height:1.8;font-size:13px}
+.modal-kicker{font:10px var(--mono);color:var(--orange);text-transform:uppercase}
+.reveal{opacity:0;transform:translateY(25px);transition:opacity .8s,transform .8s}.reveal.visible{opacity:1;transform:none}
+@media(max-width:800px){.wrap{width:min(100% - 36px,620px)}.topbar{padding:0 18px}.nav{display:none;position:absolute;top:76px;left:0;right:0;background:#101010;padding:22px;flex-direction:column;align-items:flex-start;border-bottom:1px solid #333}.nav.open{display:flex}.menu-btn{display:block}.hero{grid-template-columns:1fr;padding:65px 0 85px;min-height:auto}.hero h1{font-size:clamp(78px,17vw,130px)}.hero-art{height:370px}.hero-bottom{bottom:18px}.section-head{display:block}.section-note{margin-top:18px}.project-grid{display:block}.project{margin-bottom:28px}.project-visual{height:330px}.about-grid{grid-template-columns:1fr;gap:35px}.info-strip{grid-template-columns:1fr}.process-grid{grid-template-columns:1fr 1fr}.process{border-bottom:1px solid var(--line);padding:22px 12px 22px 0}.contact-row{display:block}.contact-hint{margin-top:25px}.music{bottom:12px;right:12px}}
+@media(max-width:480px){body{cursor:auto}button,a{cursor:pointer}.cursor,.cursor-ring{display:none}.hero-art{height:310px}.project-visual{height:280px}.process-grid{grid-template-columns:1fr}.process{border-right:0}.marquee-track{font-size:20px}section{padding:80px 0}.music-status{display:none}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div id="grain"></div><canvas id="particles"></canvas><div class="cursor"></div><div class="cursor-ring"></div>
+<header class="topbar">
+  <a class="brand" href="#home">ARYAN<span>®</span></a>
+  <nav class="nav" id="nav"><a href="#work">Works</a><a href="#about">About</a><a href="#process">Approach</a><a class="nav-cta" href="#contact">Let's talk ↗</a></nav>
+  <button class="menu-btn" id="menuBtn" aria-label="Toggle menu">MENU +</button>
+</header>
+<main>
+<section class="hero wrap" id="home">
+  <div>
+    <div class="kicker">Independent visual designer / India</div>
+    <h1>Make<br><span class="outline">noise.</span><br><span class="accent">Make</span><br>meaning.</h1>
+    <p class="hero-copy">I'm Aryan Mithil Jadhav — an Applied Arts student and visual storyteller exploring the space between graphic design, illustration and digital experiences.</p>
+    <div class="hero-actions"><a class="btn" href="#work">Explore selected work <span>↘</span></a><a class="text-link" href="#about">Get to know me ↗</a></div>
+  </div>
+  <div class="hero-art" aria-label="Abstract red and black illustration-inspired artwork">
+    <div class="art-index">VISUAL EXPERIMENTS — VOL. 01</div><div class="art-frame"></div><div class="orbit"></div><div class="hero-symbol">A</div><div class="samurai">鬼</div><div class="art-stamp">IDEAS WITH<br>AN EDGE. / 2026</div>
+  </div>
+  <div class="hero-bottom"><span>Scroll to explore ↓</span><span>Design / Illustration / Digital</span></div>
+</section>
+<div class="marquee"><div class="marquee-track">VISUAL EXPERIMENTS <span>✳</span> DESIGN WITH INTENT <span>✳</span> DRAW OUTSIDE THE LINES <span>✳</span> VISUAL EXPERIMENTS <span>✳</span> DESIGN WITH INTENT <span>✳</span> DRAW OUTSIDE THE LINES <span>✳</span></div></div>
+<section class="wrap" id="work">
+  <div class="section-head reveal"><div><div class="section-no">01 / SELECTED WORKS</div><h2>Ideas made<br>visible<span style="color:var(--orange)">.</span></h2></div><p class="section-note">A growing collection of academic explorations, personal experiments and visual stories. Replace these concept covers with your finished project images.</p></div>
+  <div class="filters reveal"><button class="filter active" data-filter="all">All work</button><button class="filter" data-filter="illustration">Illustration</button><button class="filter" data-filter="graphic">Graphic design</button><button class="filter" data-filter="identity">Identity</button><button class="filter" data-filter="digital">Digital</button></div>
+  <div class="project-grid">
+    <article class="project reveal" data-category="illustration" data-title="Ink & instinct" data-kind="Illustration / Hand-drawn" data-desc="A collection of expressive ink studies, character explorations and hand-drawn visual experiments. Add your strongest ink or pencil assignment here.">
+      <div class="project-visual"><div class="visual-word">INK<br>& INSTINCT</div><div class="visual-circle"></div><div class="visual-figure">般</div><div class="visual-sub">01 / DRAWN TO EXPRESS</div></div><div class="project-meta"><div><div class="project-title">Ink & instinct</div><div class="project-type">Illustration / Hand-drawn</div></div><div class="project-arrow">↗</div></div>
+    </article>
+    <article class="project reveal" data-category="graphic" data-title="Culture in colour" data-kind="Poster / Campaign" data-desc="Poster design and public-awareness communication. Use this space for your strongest campaign, social message or editorial poster project.">
+      <div class="project-visual"><div class="visual-word dark">CULTURE<br>IN COLOUR</div><div class="visual-figure">✳</div><div class="visual-sub" style="color:#1a1110">02 / POSTER STUDIES</div></div><div class="project-meta"><div><div class="project-title">Culture in colour</div><div class="project-type">Poster / Campaign</div></div><div class="project-arrow">↗</div></div>
+    </article>
+    <article class="project reveal" data-category="identity" data-title="Character / creature" data-kind="Mascot / Character design" data-desc="Character and mascot design explorations, from rough sketches to a distinctive visual identity. Add your mascot sheets and application mockups.">
+      <div class="project-visual"><div class="visual-word dark">CHARACTER<br>LAB.</div><div class="visual-figure">◉</div><div class="visual-sub" style="color:#222">03 / MASCOT DESIGN</div></div><div class="project-meta"><div><div class="project-title">Character / creature</div><div class="project-type">Mascot / Character design</div></div><div class="project-arrow">↗</div></div>
+    </article>
+    <article class="project reveal" data-category="graphic" data-title="Messages that matter" data-kind="Public welfare / Communication" data-desc="Visual communication built around meaningful public messages. Show the final poster, concept sketch and the thinking behind the campaign.">
+      <div class="project-visual"><div class="visual-word">MESSAGES<br>THAT MATTER</div><div class="visual-figure">✚</div><div class="visual-sub">04 / PUBLIC WELFARE</div></div><div class="project-meta"><div><div class="project-title">Messages that matter</div><div class="project-type">Public welfare / Communication</div></div><div class="project-arrow">↗</div></div>
+    </article>
+    <article class="project reveal" data-category="digital" data-title="Interface after dark" data-kind="UI / UX / Web" data-desc="Digital interface experiments, responsive web concepts and visual systems. Add screen mockups, user flows and prototypes when available.">
+      <div class="project-visual"><div class="visual-word dark">INTERFACE<br>AFTER DARK</div><div class="visual-figure">⌘</div><div class="visual-sub" style="color:#222">05 / DIGITAL WORLDS</div></div><div class="project-meta"><div><div class="project-title">Interface after dark</div><div class="project-type">UI / UX / Web</div></div><div class="project-arrow">↗</div></div>
+    </article>
+    <article class="project reveal" data-category="illustration" data-title="Anime / alternate worlds" data-kind="Anime / Digital illustration" data-desc="Anime-inspired artwork, original characters and alternate worlds. Use this project to show a cohesive series rather than isolated drawings.">
+      <div class="project-visual"><div class="visual-word">ANOTHER<br>WORLD</div><div class="visual-circle"></div><div class="visual-figure">夢</div><div class="visual-sub">06 / ANIME STUDIES</div></div><div class="project-meta"><div><div class="project-title">Anime / alternate worlds</div><div class="project-type">Anime / Digital illustration</div></div><div class="project-arrow">↗</div></div>
+    </article>
+  </div>
+</section>
+<section class="about" id="about">
+  <div class="wrap">
+    <div class="section-head reveal"><div><div class="section-no">02 / THE PERSON BEHIND THE PIXELS</div><h2>A little<br>about me<span style="color:var(--orange)">.</span></h2></div><p class="section-note">Curiosity first. Craft always. A work in progress, by design.</p></div>
+    <div class="about-grid reveal"><div class="about-big">Think.<br>Draw.<br><span>Disrupt.</span></div><div><p class="about-text">Hey, I'm <strong>Aryan Mithil Jadhav</strong>, an Applied Arts student at <strong>J.K. Art College, Wadala</strong>. I enjoy turning ideas into visual stories — whether that's a bold poster, a character with personality, a brand identity or an interface people can use.</p><p class="about-text">My work moves between <strong>hand-drawn and ink-based illustration, anime-inspired art, graphic communication and digital design</strong>. I'm learning, experimenting and looking for opportunities to make thoughtful work with good people.</p><div class="eyebrow" style="color:#a70f1c;margin-top:28px">TOOLS I WORK WITH</div><div class="skill-list"><span class="skill">InDesign</span><span class="skill">Photoshop</span><span class="skill">Illustrator</span><span class="skill">Ibis Paint X</span><span class="skill">CorelDRAW</span></div></div></div>
+    <div class="info-strip reveal"><div class="info-cell"><small>Based in</small><p>Mumbai, India</p></div><div class="info-cell"><small>Currently</small><p>Applied Arts Student</p></div><div class="info-cell"><small>Open to</small><p>Freelance / Collaboration</p></div></div>
+  </div>
+</section>
+<section class="wrap" id="process">
+  <div class="section-head reveal"><div><div class="section-no">03 / HOW I APPROACH IT</div><h2>From thought<br>to form<span style="color:var(--orange)">.</span></h2></div><p class="section-note">A flexible process that keeps the idea at the centre and the details working hard.</p></div>
+  <div class="process-grid reveal"><div class="process"><b>01 / OBSERVE</b><h3>Find the spark.</h3><p>Understand the brief, collect references and look for the idea worth pursuing.</p></div><div class="process"><b>02 / EXPLORE</b><h3>Make a mess.</h3><p>Sketch, experiment with type, test compositions and follow unexpected directions.</p></div><div class="process"><b>03 / REFINE</b><h3>Make it click.</h3><p>Build hierarchy, sharpen the visual language and make every element earn its place.</p></div><div class="process"><b>04 / DELIVER</b><h3>Put it out there.</h3><p>Prepare the final artwork, presentation and formats for the real world.</p></div></div>
+</section>
+<section class="contact" id="contact"><div class="wrap"><div class="section-no">04 / YOUR IDEA, MY NEXT PROJECT</div><h2>Got a good<br>idea? Let's<br>make it real<span style="color:#111">.</span></h2><div class="contact-row"><a class="contact-mail" href="mailto:hello@aryanmithil.com">Let's start a conversation ↗</a><p class="contact-hint">For freelance projects, collaborations, feedback or just a creative conversation.</p></div></div></section>
+</main>
+<footer><div class="wrap footer-row"><span>© 2026 ARYAN MITHIL JADHAV</span><span>BUILT WITH CURIOSITY / MADE TO EVOLVE</span><a href="#home">BACK TO TOP ↑</a></div></footer>
+<div class="music"><button id="musicBtn" aria-label="Play or pause music">▶</button><label for="audioFile">Add your soundtrack</label><input id="audioFile" type="file" accept="audio/*"><span class="music-status" id="musicStatus">VISITOR CONTROLLED</span><audio id="audio" loop></audio></div>
+<div class="modal" id="projectModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-card"><button class="modal-close" id="modalClose">CLOSE ×</button><div class="modal-kicker" id="modalKind">PROJECT / CATEGORY</div><h3 id="modalTitle">Project title</h3><p id="modalDesc"></p><p style="font:10px var(--mono);color:#777">PORTFOLIO NOTE / Replace concept artwork with your original project images and add the brief, process and final outcome.</p></div></div>
+<script>
+const $=(s,root=document)=>root.querySelector(s), $$=(s,root=document)=>[...root.querySelectorAll(s)];
+// Custom cursor
+const cursor=$('.cursor'), ring=$('.cursor-ring');let mx=innerWidth/2,my=innerHeight/2,rx=mx,ry=my;
+addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px'});
+function follow(){rx+=(mx-rx)*.16;ry+=(my-ry)*.16;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(follow)}follow();
+$$('a,button,.project').forEach(el=>{el.addEventListener('mouseenter',()=>document.body.classList.add('hovering'));el.addEventListener('mouseleave',()=>document.body.classList.remove('hovering'))});
+// Mobile navigation
+$('#menuBtn').addEventListener('click',()=>$('#nav').classList.toggle('open'));
+$$('#nav a').forEach(a=>a.addEventListener('click',()=>$('#nav').classList.remove('open')));
+// Project filtering
+$$('.filter').forEach(btn=>btn.addEventListener('click',()=>{$$('.filter').forEach(b=>b.classList.remove('active'));btn.classList.add('active');const f=btn.dataset.filter;$$('.project').forEach(p=>p.hidden=!(f==='all'||p.dataset.category===f))}));
+// Project detail modal
+const modal=$('#projectModal');$$('.project').forEach(p=>p.addEventListener('click',()=>{$('#modalTitle').textContent=p.dataset.title;$('#modalKind').textContent=p.dataset.kind;$('#modalDesc').textContent=p.dataset.desc;modal.classList.add('open')}));
+function closeModal(){modal.classList.remove('open')}$('#modalClose').addEventListener('click',closeModal);modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+// Scroll reveals
+const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}}),{threshold:.12});$$('.reveal').forEach(el=>observer.observe(el));
+// Visitor-controlled local soundtrack: no autoplay and no bundled copyrighted music
+const audio=$('#audio'),musicBtn=$('#musicBtn'),file=$('#audioFile'),status=$('#musicStatus');let loaded=false;
+file.addEventListener('change',()=>{if(file.files[0]){audio.src=URL.createObjectURL(file.files[0]);loaded=true;status.textContent=file.files[0].name.slice(0,18);musicBtn.textContent='▶'}});
+musicBtn.addEventListener('click',async()=>{if(!loaded){file.click();return}if(audio.paused){try{await audio.play();musicBtn.textContent='Ⅱ'}catch(e){status.textContent='TAP TO PLAY'}}else{audio.pause();musicBtn.textContent='▶'}});
+audio.addEventListener('ended',()=>musicBtn.textContent='▶');
+// Ambient particles
+const canvas=$('#particles'),ctx=canvas.getContext('2d');let dots=[];
+function resize(){canvas.width=innerWidth*devicePixelRatio;canvas.height=innerHeight*devicePixelRatio;ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);dots=Array.from({length:Math.min(85,Math.floor(innerWidth/15))},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:Math.random()*1.5+.3,v:Math.random()*.25+.08,a:Math.random()*.45+.12}))}
+function draw(){ctx.clearRect(0,0,innerWidth,innerHeight);dots.forEach(d=>{d.y-=d.v;if(d.y<0){d.y=innerHeight;d.x=Math.random()*innerWidth}ctx.beginPath();ctx.arc(d.x,d.y,d.r,0,Math.PI*2);ctx.fillStyle=`rgba(240,74,45,${d.a})`;ctx.fill()});requestAnimationFrame(draw)}
+addEventListener('resize',resize);resize();draw();
+</script>
+</body></html>
